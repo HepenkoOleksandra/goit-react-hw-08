@@ -12,13 +12,8 @@ const filterSlice = createSlice({
       state.name = action.payload
     },
   },
-  // selectors: {
-  //   selectNameFilter: state => state.name
-  // } 
 });
 
-export const selectNameFilter = state => state.filters.name;
-// export const { selectNameFilter } = filterSlice.selectors;
 
 export const { setFilter } = filterSlice.actions;
 
