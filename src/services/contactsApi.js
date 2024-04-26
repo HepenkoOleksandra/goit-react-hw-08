@@ -14,33 +14,33 @@ export const clearToken = () =>
   (instance.defaults.headers.common.Authorization = "");
 
 //User
-export const apiCreateNewUser = async (formData) => {
+export const apiCreateNewUser = async (formData) => { // 1
   const { data } = await instance.post("/users/signup", formData);
   return data;
 };
 
-export const apiLoginUser = async (formData) => {
+export const apiLoginUser = async (formData) => { // 2
   const { data } = await instance.post("/users/login", formData);
   return data;
 };
 
-export const apiLogOutUser = async () => {
+export const apiLogOutUser = async () => { // 3
   const { data } = await instance.post("/users/logout");
   return data;
 };
 
-export const apiGetInformationCurrentUser = async () => {
+export const apiGetInformationCurrentUser = async () => { // 4
   const { data } = await instance.post("/users/current");
   return data;
 };
 
 //Contact
-export const apiGetAllContacts = async () => {
+export const apiGetAllContacts = async () => { // 1
   const { data } = await instance.get("/contacts");
   return data;
 };
 
-export const apiAddNewContact = async (contact) => {
+export const apiAddNewContact = async (contact) => { // 2
   const { data } = await instance.post("/contacts", contact);
   return data;
 };

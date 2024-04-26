@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
-// import { selectNameFilter } from "../filters/slice";
 
 const INITAL_STATE = {
     items: [],
@@ -13,38 +12,24 @@ const contactSlice = createSlice({
   initialState: INITAL_STATE,
   reducers: {},
   extraReducers: (builder) => builder
-    .addCase(fetchContacts.pending, (state) => {
-      state.loading = true;
-      state.error = false;
-    })
-    .addCase(fetchContacts.fulfilled, (state, action) => {
+    .addCase(fetchContacts.fulfilled, (state, action) => { //1
       state.loading = false;
       state.items = action.payload;
-    }).addCase(fetchContacts.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
     })
-    .addCase(deleteContact.pending, (state) => {
-      state.loading = true;
-      state.error = false;
-    })
-    .addCase(deleteContact.fulfilled, (state, action) => {
-      state.loading = false;
-      state.items = state.items.filter((item) => item.id !== action.payload.id);
-    })
-    .addCase(deleteContact.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
-    })
-    .addCase(addContact.pending, (state) => {
-      state.loading = true;
-      state.error = false;
-    })
-    .addCase(addContact.fulfilled, (state, action) => {
+    .addCase(addContact.fulfilled, (state, action) => { //2
       state.loading = false;
       state.items.push(action.payload);
     })
-    .addCase(addContact.rejected, (state) => {
+    .addCase(deleteContact.fulfilled, (state, action) => { // 3
+      state.loading = false;
+      state.items = state.items.filter((item) => item.id !== action.payload.id);
+    })   
+
+    .addMatcher(isAnyOf(fetchContacts.pending, addContact.pending, deleteContact.pending),  (state) => {
+      state.loading = true;
+      state.error = false;
+    })
+    .addMatcher(isAnyOf(fetchContacts.rejected, addContact.rejected, deleteContact.rejected), (state) => {
       state.loading = false;
       state.error = true;
     })
