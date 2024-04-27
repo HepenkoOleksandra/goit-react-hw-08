@@ -6,7 +6,12 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchContacts } from "../redux/contacts/operations";
 import clsx from "clsx";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
+import HomePage from "../pages/HomePage/HomePage";
+import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import ContactsPage from "../pages/ContactsPage/ContactsPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage ";
 
 const navLinkClassActive = ({ isActive }) =>
   // clsx(css.navLink, { [css.active]: isActive });
@@ -29,6 +34,18 @@ function App() {
           <NavLink className={navLinkClassActive} to="/movies">Movies</NavLink>
         </nav>
       </header>
+
+      <main>
+        {/* <Suspense fallback={<Loader />}> */}
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/register' element={<RegistrationPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/contacts' element={<ContactsPage />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
+        {/* </Suspense> */}
+      </main>
 
     <div className='container'>
       <h1 className='containerTitle'>Phonebook</h1>
