@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: "https://connections-api.herokuapp.com",
-    headers: {},
-    params: {}
+    // headers: {},
+    // params: {}
 });
 
 export const setToken = (token) => {
@@ -30,7 +30,7 @@ export const apiLogOutUser = async () => { // 3
 };
 
 export const apiGetInformationCurrentUser = async () => { // 4
-  const { data } = await instance.post("/users/current");
+  const { data } = await instance.get("/users/current");
   return data;
 };
 
