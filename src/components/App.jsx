@@ -13,6 +13,8 @@ import ContactsPage from "../pages/ContactsPage/ContactsPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage ";
 import Layout from "./Layout/Layout";
 import { apiRefreshUser } from "../redux/auth/operations";
+import RestrictedRoute from "./RestrictedRoute/RestrictedRoute";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 function App() {
    const dispatch = useDispatch();
@@ -27,9 +29,19 @@ function App() {
      {/* <Suspense fallback={<Loader />}> */}
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/register' element={<RegistrationPage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/contacts' element={<ContactsPage />} />
+        <Route path='/register' element={
+          <RestrictedRoute>
+            <RegistrationPage />
+          </RestrictedRoute>} />
+        <Route path='/login' element={
+          <RestrictedRoute>
+            <LoginPage />
+          </RestrictedRoute>} />
+        <Route path='/contacts' element={
+          <PrivateRoute>
+            <ContactsPage />
+          </PrivateRoute>
+          } />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
       {/* </Suspense> */}

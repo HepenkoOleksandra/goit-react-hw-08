@@ -25,8 +25,8 @@ export const apiLoginUser = async (formData) => { // 2
 };
 
 export const apiLogOutUser = async () => { // 3
-  const { data } = await instance.post("/users/logout");
-  return data;
+  await instance.post("/users/logout");
+  return;
 };
 
 export const apiGetInformationCurrentUser = async () => { // 4

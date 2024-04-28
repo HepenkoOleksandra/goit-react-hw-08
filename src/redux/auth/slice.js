@@ -34,10 +34,9 @@ const authSlice = createSlice({
       state.user.email = action.payload.user.email;
       state.token = action.payload.token;
     })
-      .addCase(apiLogout.fulfilled, (state, action) => { // 3
-         state.loading = false;
-      state.items = action.payload; 
-      })
+    .addCase(apiLogout.fulfilled, () => { // 3
+        return INITAL_STATE;
+    })
     .addCase(apiRefreshUser.fulfilled, (state, action) => { // 4
         console.log(action.payload);  
       state.loading = false;
