@@ -45,7 +45,7 @@ export const apiAddNewContact = async (contact) => { // 2
   return data;
 };
 
-export const apiDeleteContactById = async (contactId) => {
+export const apiDeleteContactById = async (contactId) => { //3
   const {data} = await instance.delete(`/contacts/${contactId}`);
   return data;
 };

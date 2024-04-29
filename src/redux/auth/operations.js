@@ -52,7 +52,7 @@ export const apiRefreshUser = createAsyncThunk( //4
             setToken(token);
 
             const data = await apiGetInformationCurrentUser();
-            console.log(data);
+            // console.log(data);
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message); 

@@ -22,10 +22,12 @@ const ContactList = () => {
     return (
         <ul className={css.contactList}>
             {loading && <Loader/> }
-            {error &&  <ErrorMessage/>}
-            {filterContacts.map((contact) => {
-                return (<li className={css.contactListItem} key={contact.id}>
-                    <Contact name={contact.name} number={contact.number} id={contact.id} />
+            {error && <ErrorMessage />}
+            {Array.isArray(filterContacts) && filterContacts.length === 0 &&
+                (<li>There are no contacts. Please add contacts!</li>)}
+        {Array.isArray(filterContacts) && filterContacts.map(({name, number, id}) => {
+                return (<li className={css.contactListItem} key={id}>
+                    <Contact name={name} number={number} id={id} />
                 </li>)
             })}
         </ul>

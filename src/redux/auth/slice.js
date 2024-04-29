@@ -38,7 +38,7 @@ const authSlice = createSlice({
         return INITAL_STATE;
     })
     .addCase(apiRefreshUser.fulfilled, (state, action) => { // 4
-        console.log(action.payload);  
+        // console.log(action.payload);  
       state.loading = false;
       state.isLoggedIn = true;
       state.user.name = action.payload.name;
