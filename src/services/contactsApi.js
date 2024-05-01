@@ -13,7 +13,7 @@ export const setToken = (token) => {
 export const clearToken = () =>
   (instance.defaults.headers.common.Authorization = "");
 
-//User
+//User Api
 export const apiCreateNewUser = async (formData) => { // 1
   const { data } = await instance.post("/users/signup", formData);
   return data;
@@ -34,7 +34,7 @@ export const apiGetInformationCurrentUser = async () => { // 4
   return data;
 };
 
-//Contact
+//Contact Api
 export const apiGetAllContacts = async () => { // 1
   const { data } = await instance.get("/contacts");
   return data;

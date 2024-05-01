@@ -1,34 +1,34 @@
-// import ContactForm from "./ContactForm/ContactForm";
-// import ContactList from "./ContactList/ContactList";
-// import SearchBox from "./SearchBox/SearchBox";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-// import { fetchContacts } from "../redux/contacts/operations";
+import { useDispatch, useSelector } from "react-redux";
+import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-//lazy
-import HomePage from "../pages/HomePage/HomePage";
-import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
-import ContactsPage from "../pages/ContactsPage/ContactsPage";
-import NotFoundPage from "../pages/NotFoundPage/NotFoundPage ";
+import Loader from "./Loader/Loader";
 import Layout from "./Layout/Layout";
-import { apiRefreshUser } from "../redux/auth/operations";
 import RestrictedRoute from "./RestrictedRoute/RestrictedRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import { apiRefreshUser } from "../redux/auth/operations";
+import { selectIsRefreshing } from "../redux/auth/selectors";
+
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+const RegistrationPage = lazy(() => import('../pages/RegistrationPage/RegistrationPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage '));
 
 function App() {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
    useEffect(() => {
-     // dispatch(fetchContacts());
-     dispatch(apiRefreshUser());
-    }, [dispatch]);
+    dispatch(apiRefreshUser());
+  }, [dispatch]);
    
-  return (
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
     <Layout>
-     {/* <Suspense fallback={<Loader />}> */}
-          <Routes>
-            <Route path='/' element={<HomePage />} />
+      <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
         <Route path='/register' element={
           <RestrictedRoute>
             <RegistrationPage />
@@ -41,20 +41,12 @@ function App() {
           <PrivateRoute>
             <ContactsPage />
           </PrivateRoute>
-          } />
-            <Route path='*' element={<NotFoundPage />} />
-          </Routes>
-      {/* </Suspense> */}
+        } />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+      </Suspense>
     </Layout>
-      
-    // <div className='container'>
-    //   <h1 className='containerTitle'>Phonebook</h1>
-    //   <ContactForm />
-    //   <SearchBox />
-    //   <ContactList />
-    //   </div>
-    // </div>
-  )
+  );    
 }
 
 export default App

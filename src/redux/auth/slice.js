@@ -37,20 +37,31 @@ const authSlice = createSlice({
     .addCase(apiLogout.fulfilled, () => { // 3
         return INITAL_STATE;
     })
+    .addCase(apiRefreshUser.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+      state.isRefreshing = true;
+    })
     .addCase(apiRefreshUser.fulfilled, (state, action) => { // 4
         // console.log(action.payload);  
+      state.isRefreshing = false;
       state.loading = false;
       state.isLoggedIn = true;
       state.user.name = action.payload.name;
       state.user.email = action.payload.email;
     })
+    .addCase(apiRefreshUser.rejected, (state) => {
+      state.isRefreshing = false;
+      state.loading = false;
+      state.error = true;
+    })
       
     
-    .addMatcher(isAnyOf(apiRegister.pending, apiLogin.pending, apiLogout.pending, apiRefreshUser.pending), (state) => {
+    .addMatcher(isAnyOf(apiRegister.pending, apiLogin.pending, apiLogout.pending), (state) => {
       state.loading = true;
       state.error = false;
     })
-    .addMatcher(isAnyOf(apiRegister.rejected, apiLogin.rejected, apiLogout.rejected, apiRefreshUser.rejected), (state) => {
+    .addMatcher(isAnyOf(apiRegister.rejected, apiLogin.rejected, apiLogout.rejected), (state) => {
       state.loading = false;
       state.error = true;
     })

@@ -1,7 +1,8 @@
+import css from "./HomePage.module.css"
 
 const HomePage = () => {
   return (
-    <div>Hello!</div>
+    <div className={css.homePageContainer}>Welcome to the contact book!</div>
   )
 }
 

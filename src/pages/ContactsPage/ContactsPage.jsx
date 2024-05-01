@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { fetchContacts } from "../../redux/contacts/operations"
 import ContactForm from "../../components/ContactForm/ContactForm"
 import ContactList from "../../components/ContactList/ContactList"
 import SearchBox from "../../components/SearchBox/SearchBox"
-import { useEffect } from "react"
-// import { apiGetAllContacts } from "../../services/contactsApi"
-import { fetchContacts } from "../../redux/contacts/operations"
+import css from './ContactsPage.module.css'
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const ContactsPage = () => {
   }, [dispatch])
 
   return (
-    <div>
-      <h1 className='containerTitle'>Phonebook</h1>
+    <div className={css.contactsPageContainer}>
+      <h1 className={css.title}>Phonebook</h1>
       <ContactForm />
       <SearchBox />
       <ContactList />
